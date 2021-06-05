@@ -3,12 +3,12 @@ const UnauthorizedError = require('../errors/unauthorized-err');
 
 require('dotenv').config();
 
-const { JWT_TOKEN } = process.env
+const { JWT_TOKEN } = process.env;
 
 const auth = (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1];
 
-  if(!token) {
+  if (!token) {
     next(new UnauthorizedError());
   } else {
     let payload;
@@ -20,7 +20,7 @@ const auth = (req, res, next) => {
 
     req.user = payload;
     next();
-  };
+  }
 };
 
 module.exports = auth;

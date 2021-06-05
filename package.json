@@ -7,6 +7,8 @@
     "bcrypt": "^5.0.1",
     "celebrate": "^14.0.0",
     "dotenv": "^10.0.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4",
     "express": "^4.17.1",
     "express-winston": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
@@ -15,9 +17,11 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "eslint": "^7.28.0",
     "nodemon": "^2.0.7"
   },
   "scripts": {
+    "lint": "npx eslint .",
     "start": "node app.js",
     "dev": "nodemon app.js"
   },

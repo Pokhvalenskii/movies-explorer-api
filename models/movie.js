@@ -41,11 +41,11 @@ const movieSchema = mongoose.Schema({
   },
   owner: {
     required: true,
-    type: String,    
+    type: String,
   },
   movieId: {
     required: true,
-    type: String, 
+    type: String,
   },
   nameRU: {
     required: true,
@@ -59,6 +59,6 @@ const movieSchema = mongoose.Schema({
     minlength: 2,
     maxlength: 1000,
   },
-})
+});
 
 module.exports = mongoose.model('movie', movieSchema);

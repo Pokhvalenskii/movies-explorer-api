@@ -1,23 +1,21 @@
 const ServerError = require('../errors/server-error');
 const ConflictError = require('../errors/conflict-err');
-const BadRequestError = require('../errors/bad-request-err');
-
 
 const Movie = require('../models/movie');
 
-const createMovie = (req, res, next) => { //добавление фильма
+const createMovie = (req, res, next) => {
   const {
-    country, 
-    director, 
-    duration, 
-    year, 
-    description, 
-    image, 
-    trailer, 
-    nameRU, 
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailer,
+    nameRU,
     nameEN,
-    thumbnail, 
-    movieId
+    thumbnail,
+    movieId,
   } = req.body;
 
   Movie.findOne({ movieId })
@@ -26,24 +24,24 @@ const createMovie = (req, res, next) => { //добавление фильма
         throw new ConflictError('Этот фильм уже добавлен!', 409);
       } else {
         Movie.create({
-          country, 
-          director, 
-          duration, 
-          year, 
-          description, 
-          image, 
-          trailer, 
-          nameRU, 
+          country,
+          director,
+          duration,
+          year,
+          description,
+          image,
+          trailer,
+          nameRU,
           nameEN,
-          thumbnail, 
+          thumbnail,
           movieId,
           owner: req.user.id,
         })
           .then((movie) => res.send(movie))
-          .catch((err) => {
+          .catch(() => {
             next(new ServerError());
           });
-      };
+      }
     }).catch(next);
 };
 
@@ -57,11 +55,11 @@ const getMovie = (req, res, next) => {
 
 const deleteMovie = (req, res, next) => {
   const { movieId } = req.params;
-  Movie.findOneAndDelete({movieId})
-    .then(() => res.status(200).send({message: 'фильм удален!'}))
+  Movie.findOneAndDelete({ movieId })
+    .then(() => res.status(200).send({ message: 'фильм удален!' }))
     .catch(next);
 };
 
 module.exports = {
-  createMovie, getMovie, deleteMovie
-}
+  createMovie, getMovie, deleteMovie,
+};
