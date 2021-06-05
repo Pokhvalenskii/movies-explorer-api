@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const User = require('../models/user');
 
+const { JWT_TOKEN } = process.env;
+
 const NotFoundError = require('../errors/not-found-err');
 const UnauthorizedError = require('../errors/unauthorized-err');
 const ServerError = require('../errors/server-error');
@@ -34,8 +36,28 @@ const signup = (req, res, next) => {
 };
 
 const signin = (req, res, next) => {
-
-}
+  const { email, password } = req.body;
+  User.findOne({ email }).select('+password')
+    .then((user) => {
+      if(!user) {
+        throw new UnauthorizedError();
+      } else {
+        bcrypt.compare(password, user.password, ((err, isValid) => {
+          if (err) {
+            next(new ServerError());
+          } 
+          if (isValid) {
+            const token = jwt.sign({
+              id: user._id,
+            }, JWT_TOKEN);
+            res.status(201).send({message: 'login', token })
+          } else {
+            next(new UnauthorizedError());
+          }
+        }));
+      };
+    }).catch(next);
+};
 
 module.exports = {
   signin, signup,

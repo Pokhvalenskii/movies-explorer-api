@@ -2,11 +2,13 @@ const router = require('express').Router();
 
 const movieRouter = require('./movie');
 const signup = require('./signup');
-const checkError = require('../middlewares/error')
+const signin = require('./signin');
+const checkError = require('../middlewares/error');
+const auth = require('../middlewares/auth');
 
-
-router.use('/movies', movieRouter);
+router.use('/movies', auth, movieRouter);
 router.use('/signup', signup);
+router.use('/signin', signin);
 router.use(checkError);
 
 
