@@ -36,13 +36,22 @@ const createMovie = (req, res) => { //добавление фильма
 
 const getMovie = (req, res) => {
   Movie.find({})
-    .then((users) => res.send(users))
+    .then((movies) => res.send(movies))
     .catch(() => {
       console.log('getUser error');
     });
 };
 
+const deleteMovie = (req, res) => {
+  const { movieId } = req.params;
+  console.log('MOVIE ID',movieId);
+  Movie.findOneAndDelete({movieId})
+    .then(() => res.status(200).send({message: 'фильм удален!'}))
+    .catch(() => {
+      console.log('deleteMovie Error');
+    })
+}
 
 module.exports = {
-  createMovie, getMovie
+  createMovie, getMovie, deleteMovie
 }
