@@ -1,8 +1,9 @@
+const ServerError = require('../errors/server-error');
+const ConflictError = require('../errors/conflict-err');
+
 const Movie = require('../models/movie');
 
-const owner = '_id1234'
-
-const createMovie = (req, res) => { //добавление фильма
+const createMovie = (req, res, next) => { //добавление фильма
   const {
     country, 
     director, 
@@ -16,41 +17,47 @@ const createMovie = (req, res) => { //добавление фильма
     thumbnail, 
     movieId
   } = req.body;
-  
-  Movie.create({
-    country, 
-    director, 
-    duration, 
-    year, 
-    description, 
-    image, 
-    trailer, 
-    nameRU, 
-    nameEN,
-    thumbnail, 
-    movieId,
-    owner: owner
-  })
-  console.log(req.body, 'createMovie');
+  Movie.findOne({ movieId })
+    .then((movie) => {
+      if (movie) {
+        throw new ConflictError('Этот фильм уже добавлен!', 409);
+      } else {
+        Movie.create({
+          country, 
+          director, 
+          duration, 
+          year, 
+          description, 
+          image, 
+          trailer, 
+          nameRU, 
+          nameEN,
+          thumbnail, 
+          movieId,
+          owner: req.user.id,
+        })
+          .then((movie) => res.send(movie))
+          .catch(() => {
+            next(new ServerError());
+          });
+      };
+    }).catch(next);
 };
 
-const getMovie = (req, res) => {
+const getMovie = (req, res, next) => {
   Movie.find({})
     .then((movies) => res.send(movies))
     .catch(() => {
-      console.log('getUser error');
+      next(new ServerError());
     });
 };
 
-const deleteMovie = (req, res) => {
+const deleteMovie = (req, res, next) => {
   const { movieId } = req.params;
-  console.log('MOVIE ID',movieId);
   Movie.findOneAndDelete({movieId})
     .then(() => res.status(200).send({message: 'фильм удален!'}))
-    .catch(() => {
-      console.log('deleteMovie Error');
-    })
-}
+    .catch(next);
+};
 
 module.exports = {
   createMovie, getMovie, deleteMovie

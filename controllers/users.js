@@ -20,7 +20,7 @@ const signup = (req, res, next) => {
   User.findOne({ email })
     .then((user) => {
       if(user) {
-        throw new ConflictError();
+        throw new ConflictError('Пользователь с таким email уже существует', 409);
       } else {
         bcrypt.hash(password, 10)
           .then((hash) => {
