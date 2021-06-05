@@ -1,5 +1,7 @@
 const ServerError = require('../errors/server-error');
 const ConflictError = require('../errors/conflict-err');
+const BadRequestError = require('../errors/bad-request-err');
+
 
 const Movie = require('../models/movie');
 
@@ -17,6 +19,7 @@ const createMovie = (req, res, next) => { //добавление фильма
     thumbnail, 
     movieId
   } = req.body;
+
   Movie.findOne({ movieId })
     .then((movie) => {
       if (movie) {
@@ -37,7 +40,7 @@ const createMovie = (req, res, next) => { //добавление фильма
           owner: req.user.id,
         })
           .then((movie) => res.send(movie))
-          .catch(() => {
+          .catch((err) => {
             next(new ServerError());
           });
       };

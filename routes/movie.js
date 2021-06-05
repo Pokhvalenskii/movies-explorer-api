@@ -1,5 +1,4 @@
 const router = require('express').Router();
-
 const { getMovie, createMovie, deleteMovie} = require('../controllers/movie');
 
 router.get('/', getMovie);
