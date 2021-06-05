@@ -59,6 +59,25 @@ const signin = (req, res, next) => {
     }).catch(next);
 };
 
+const updateMe = (req, res, next) => {
+  User.findByIdAndUpdate(req.user.id,
+    { $set: { name: req.body.name, email: req.body.email } },
+    { new: true, runValidators: true })
+    .then((user) => {
+      if (!user) { throw new NotFoundError(); }
+      res.send(user);
+    })
+    .catch(next);
+};
+
+const getMe = (req, res, next) => {
+  User.findById(req.user.id)
+    .then((user) => {
+      res.status(201).send(user);
+    })
+    .catch(next);
+};
+
 module.exports = {
-  signin, signup,
+  signin, signup, getMe, updateMe,
 }
