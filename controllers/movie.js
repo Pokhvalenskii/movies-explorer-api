@@ -1,5 +1,7 @@
 const ServerError = require('../errors/server-error');
 const ConflictError = require('../errors/conflict-err');
+const Forbidden = require('../errors/forbidden-err');
+const NotFoundError = require('../errors/not-found-err');
 
 const Movie = require('../models/movie');
 
@@ -55,9 +57,19 @@ const getMovie = (req, res, next) => {
 
 const deleteMovie = (req, res, next) => {
   const { movieId } = req.params;
-  Movie.findOneAndDelete({ movieId })
-    .then(() => res.status(200).send({ message: 'фильм удален!' }))
-    .catch(next);
+  Movie.findOne({ movieId })
+    .then((movie) => {
+      if (movie) {
+        if (JSON.stringify(movie.owner) === JSON.stringify(req.user.id)) {
+          Movie.findOneAndDelete({ movieId })
+            .then(() => res.status(200).send({ message: 'Фильм удален!' }));
+        } else {
+          throw new Forbidden();
+        }
+      } else {
+        throw new NotFoundError();
+      }
+    }).catch(next);
 };
 
 module.exports = {
