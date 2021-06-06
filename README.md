@@ -3,7 +3,9 @@ diploma - api
 ## Описание
 Называние: diploma - api
 #### Сервер работает по адресу: `https://api.lenskii.nomoredomains.icu/`
+
 ===============================
+
 #### возвращает информацию о пользователе (email и имя)
 `GET /users/me`
 
