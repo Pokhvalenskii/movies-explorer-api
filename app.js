@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
-const { PORT = 3001 } = process.env;
+const { PORT = 3001, DB_URL } = process.env;
 const router = require('./routes/index');
 
 mongoose.connect('mongodb://localhost:27017/diploma', {
