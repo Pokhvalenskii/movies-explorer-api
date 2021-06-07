@@ -39,7 +39,7 @@ const createMovie = (req, res, next) => {
           movieId,
           owner: req.user.id,
         })
-          .then((movie) => res.send(movie))
+          .then((responseMovie) => res.send(responseMovie))
           .catch(() => {
             next(new ServerError());
           });
