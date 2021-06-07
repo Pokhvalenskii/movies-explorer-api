@@ -3,11 +3,13 @@ const UnauthorizedError = require('../errors/unauthorized-err');
 
 require('dotenv').config();
 
-const { JWT_TOKEN, NODE_ENV } = process.env;
+const { JWT_TOKEN = 'secret', NODE_ENV } = process.env;
 
-const auth = (req, res, next) => {
+const auth = (req, res, next) => {  
+  if (req.headers.authorization === undefined) {
+    next(new UnauthorizedError());
+  }
   const token = req.headers.authorization.split(' ')[1];
-
   if (!token) {
     next(new UnauthorizedError());
   } else {
