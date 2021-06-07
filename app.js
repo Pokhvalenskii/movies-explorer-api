@@ -2,10 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
-const { PORT = 3001, DB_URL } = process.env;
+const { PORT = 3001, DB_URL, NODE_ENV } = process.env;
 const router = require('./routes/index');
 
-mongoose.connect('mongodb://localhost:27017/diploma', {
+mongoose.connect(NODE_ENV === 'production' ? DB_URL : 'mongodb://localhost:27017/diploma', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
