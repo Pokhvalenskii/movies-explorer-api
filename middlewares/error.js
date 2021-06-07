@@ -4,7 +4,6 @@ const checkError = (err, req, res, next) => {
     res.status(400).send({
       message: 'Неправильный, некорректный запрос',
     });
-    console.log('ERR', message);
   } else {
     res.status(statusCode).send({
       message: statusCode === 500

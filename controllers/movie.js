@@ -62,7 +62,8 @@ const deleteMovie = (req, res, next) => {
       if (movie) {
         if (JSON.stringify(movie.owner) === JSON.stringify(req.user.id)) {
           return Movie.findOneAndDelete({ movieId })
-            .then(() => res.status(200).send({ message: 'Фильм удален!' }));
+            .then(() => res.status(200).send({ message: 'Фильм удален!' }))
+            .catch(next);
         } throw new Forbidden();
       } else {
         throw new NotFoundError();
