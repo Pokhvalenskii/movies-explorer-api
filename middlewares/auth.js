@@ -3,7 +3,7 @@ const UnauthorizedError = require('../errors/unauthorized-err');
 
 require('dotenv').config();
 
-const { JWT_TOKEN } = process.env;
+const { JWT_TOKEN, NODE_ENV } = process.env;
 
 const auth = (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1];
@@ -13,7 +13,7 @@ const auth = (req, res, next) => {
   } else {
     let payload;
     try {
-      payload = jwt.verify(token, JWT_TOKEN);
+      payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_TOKEN : 'aboba-secret-word');
     } catch (err) {
       next(new UnauthorizedError());
     }

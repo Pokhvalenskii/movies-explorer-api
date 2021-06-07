@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const User = require('../models/user');
 
-const { JWT_TOKEN } = process.env;
+const { JWT_TOKEN, NODE_ENV } = process.env;
 
 const NotFoundError = require('../errors/not-found-err');
 const UnauthorizedError = require('../errors/unauthorized-err');
@@ -48,7 +48,7 @@ const signin = (req, res, next) => {
           if (isValid) {
             const token = jwt.sign({
               id: user._id,
-            }, JWT_TOKEN);
+            }, NODE_ENV === 'production' ? JWT_TOKEN : 'aboba-secret-word');
             res.status(201).send({ message: 'login', token });
           } else {
             next(new UnauthorizedError());
