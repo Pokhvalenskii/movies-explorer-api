@@ -5,13 +5,21 @@ const movieSchema = mongoose.Schema({
     required: true,
     type: String,
     minlength: 2,
+<<<<<<< HEAD
     maxlength: 300,
+=======
+    maxlength: 5000,
+>>>>>>> a60da731773bd06df41e7fb698c82c60f4e08740
   },
   director: {
     required: true,
     type: String,
     minlength: 2,
+<<<<<<< HEAD
     maxlength: 300,
+=======
+    maxlength: 5000,
+>>>>>>> a60da731773bd06df41e7fb698c82c60f4e08740
   },
   duration: {
     required: true,
@@ -25,7 +33,11 @@ const movieSchema = mongoose.Schema({
     required: true,
     type: String,
     minlength: 2,
+<<<<<<< HEAD
     maxlength: 3000,
+=======
+    maxlength: 5000,
+>>>>>>> a60da731773bd06df41e7fb698c82c60f4e08740
   },
   image: {
     required: true,
@@ -45,19 +57,19 @@ const movieSchema = mongoose.Schema({
   },
   movieId: {
     required: true,
-    type: Number,
+    type: String,
   },
   nameRU: {
     required: true,
     type: String,
     minlength: 2,
-    maxlength: 1000,
+    maxlength: 5000,
   },
   nameEN: {
     required: true,
     type: String,
     minlength: 2,
-    maxlength: 1000,
+    maxlength: 5000,
   },
 });
 

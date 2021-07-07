@@ -11,7 +11,10 @@ const { reqLogger, errLogger } = require('../middlewares/logger');
 
 router.use(reqLogger);
 router.use(cors());
+<<<<<<< HEAD
 
+=======
+>>>>>>> a60da731773bd06df41e7fb698c82c60f4e08740
 router.use('/movies', auth, movieRouter);
 router.use('/users', auth, userRouter);
 router.use('/signup', signup);
