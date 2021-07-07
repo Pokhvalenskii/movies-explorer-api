@@ -1,6 +1,6 @@
 class Forbidden extends Error {
   constructor() {
-    super('Вы не можете удалить карточку');
+    super('Вы не можете удалить фильм');
     this.statusCode = 403;
   }
 }

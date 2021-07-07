@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const { JWT_TOKEN = 'secret', NODE_ENV } = process.env;
 
-const auth = (req, res, next) => {  
+const auth = (req, res, next) => {
   if (req.headers.authorization === undefined) {
     next(new UnauthorizedError());
   }
