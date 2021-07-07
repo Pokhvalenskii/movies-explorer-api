@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+const cors = require('cors');
 const movieRouter = require('./movie');
 const userRouter = require('./users');
 const signup = require('./signup');
@@ -10,6 +10,7 @@ const notFound = require('../middlewares/notFound');
 const { reqLogger, errLogger } = require('../middlewares/logger');
 
 router.use(reqLogger);
+router.use(cors());
 router.use('/movies', auth, movieRouter);
 router.use('/users', auth, userRouter);
 router.use('/signup', signup);
