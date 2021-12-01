@@ -9,7 +9,12 @@ const auth = require('../middlewares/auth');
 const notFound = require('../middlewares/notFound');
 const { reqLogger, errLogger } = require('../middlewares/logger');
 
+const topPvP = require('./topPvP');
+
 router.use(reqLogger);
+
+router.use('/pvpstatistic', topPvP);
+
 router.use('/movies', auth, movieRouter);
 router.use('/users', auth, userRouter);
 router.use('/signup', signup);
